@@ -1,1 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>khasenti oh no!</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😍</text></svg>"
+    />
 
+    <style>
+      /* Existing styles */
+      body {
+        margin: 0;
+        min-height: 100vh;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffe6e6;
+        overflow: hidden;
+        cursor: pointer;
+        position: fixed;
+        width: 100%;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+      }
+
+      /* Add new shimmering text styles */
+      @keyframes shimmer {
+        0% {
+          fill: #ff1493;
+          filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.3));
+        }
+        50% {
+          fill: #ff1493;
+          filter: drop-shadow(2px 2px 8px rgba(255, 255, 255, 0.8));
+        }
+        100% {
+          fill: #ff1493;
+          filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.3));
+        }
+      }
+
+      .curved-text {
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 400px;
+        height: 100px;
+      }
+
+      .curved-text path {
+        fill: none;
+      }
+
+      .curved-text text {
+        font-family: "Varela Round", "Comic Sans MS", cursive;
+        font-size: 36px;
+        font-weight: bold;
+        animation: shimmer 2s infinite ease-in-out;
+      }
+
+      /* Rest of existing styles */
+      @keyframes spinToken {
+        0% {
+          transform: rotate(0deg) scale(1);
+        }
+        50% {
+          transform: rotate(-180deg) scale(0.8);
+        }
+        100% {
+          transform: rotate(-360deg) scale(1);
+        }
+      }
+
+      @keyframes spinText {
+        0% {
+          transform: rotate(0deg) scale(1);
+        }
+        50% {
+          transform: rotate(180deg) scale(0.8);
+        }
+        100% {
+          transform: rotate(360deg) scale(1);
+        }
+      }
+
+      @keyframes clickHeart {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(2);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(3);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        position: relative;
+        width: min(400px, 90vw);
+        height: min(400px, 90vw);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+      }
+
+      .token {
+        width: min(200px, 45vw);
+        height: min(200px, 45vw);
+        background-color: #ffd700;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border: 12px solid #daa520;
+        animation: spinToken 4s infinite ease-in-out;
+        transform-origin: center center;
+      }
+
+      .token-text {
+        color: #4a3500;
+        font-family: "Varela Round", "Comic Sans MS", cursive;
+        font-size: 28px;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      .rotating-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        animation: spinText 4s infinite ease-in-out;
+        transform-origin: center center;
+      }
+
+      .rotating-text span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform-origin: 0 0;
+        font-family: "Varela Round", "Comic Sans MS", cursive;
+        font-size: 32px;
+        font-weight: bold;
+        color: #ff6b88;
+      }
+
+      .heart {
+        position: fixed;
+        font-size: 40px;
+        color: white;
+        pointer-events: none;
+      }
+
+      .click-heart {
+        position: fixed;
+        font-size: 60px;
+        color: #ff6b88;
+        pointer-events: none;
+        animation: clickHeart 1s ease-out forwards;
+        transform-origin: center;
+      }
+
+      .audio-controls {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <svg class="curved-text" viewBox="0 0 400 100">
+        <defs>
+          <path id="curve" d="M20,90 Q200,20 380,90" />
+        </defs>
+        <text>
+          <textPath href="#curve" startOffset="50%" text-anchor="middle">
+            Tiffany & Justin
+          </textPath>
+        </text>
+      </svg>
+      <div class="rotating-text">
+        <script>
+          const text = "WE GOT ENGAGED! ";
+          const angleStep = 360 / text.length;
+          text.split("").forEach((char, i) => {
+            const angle = angleStep * i;
+            document.write(
+              `<span style="transform: rotate(${angle}deg) translate(180px) rotate(90deg)">${char}</span>`
+            );
+          });
+        </script>
+      </div>
+      <div class="token">
+        <div class="token-text">TOKEN</div>
+      </div>
+    </div>
+
+    <audio id="bgMusic" loop autoplay>
+      <source src="rick.mp3" type="audio/mpeg" />
+    </audio>
+
+    <div class="audio-controls">
+      <button
+        onclick="document.getElementById('bgMusic').paused ? document.getElementById('bgMusic').play() : document.getElementById('bgMusic').pause()"
+      >
+        🔊
+      </button>
+    </div>
+
+    <script>
+      // Audio handling
+      const bgMusic = document.getElementById("bgMusic");
+      const audioButton = document.getElementById("audioButton");
+
+      // Try to play audio as soon as possible
+      function tryAutoplay() {
+        bgMusic.play().catch((error) => {
+          console.log("Autoplay prevented. Waiting for user interaction.");
+          // Show a visual indicator that sound is muted
+          audioButton.textContent = "🔈";
+        });
+      }
+
+      function toggleAudio() {
+        if (bgMusic.paused) {
+          bgMusic.play();
+          audioButton.textContent = "🔊";
+        } else {
+          bgMusic.pause();
+          audioButton.textContent = "🔈";
+        }
+      }
+
+      // Try to autoplay when the page loads
+      window.addEventListener("load", tryAutoplay);
+
+      // Also try to autoplay on the first user interaction
+      document.addEventListener(
+        "click",
+        function initAudio() {
+          tryAutoplay();
+          document.removeEventListener("click", initAudio);
+        },
+        { once: true }
+      );
+    </script>
+
+    <script>
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "♥";
+
+        const startX = Math.random() * window.innerWidth;
+        const startY = window.innerHeight + Math.random() * 50;
+        const travelDistance = window.innerHeight * (0.5 + Math.random() * 0.4);
+        const duration = 2 + Math.random() * 2;
+        const horizontalDrift = (Math.random() - 0.5) * 100;
+
+        heart.style.left = startX + "px";
+        heart.style.top = startY + "px";
+
+        const animationName = `float-${Date.now()}`;
+
+        const keyframes = `
+                @keyframes ${animationName} {
+                    0% {
+                        transform: translate(0, 0) scale(0);
+                        opacity: 0;
+                    }
+                    20% {
+                        transform: translate(${horizontalDrift * 0.3}px, -${
+          travelDistance * 0.3
+        }px) scale(1);
+                        opacity: 1;
+                    }
+                    80% {
+                        transform: translate(${horizontalDrift}px, -${
+          travelDistance * 0.8
+        }px) scale(1);
+                        opacity: 0.8;
+                    }
+                    100% {
+                        transform: translate(${
+                          horizontalDrift * 1.2
+                        }px, -${travelDistance}px) scale(0);
+                        opacity: 0;
+                    }
+                }
+            `;
+
+        const styleSheet = document.createElement("style");
+        styleSheet.textContent = keyframes;
+        document.head.appendChild(styleSheet);
+
+        heart.style.animation = `${animationName} ${duration}s ease-out forwards`;
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+          styleSheet.remove();
+        }, duration * 1000);
+      }
+
+      function createClickHeart(x, y) {
+        const heart = document.createElement("div");
+        heart.className = "click-heart";
+        heart.innerHTML = "♥";
+        heart.style.left = x - 30 + "px";
+        heart.style.top = y - 30 + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 1000);
+      }
+
+      function startHearts() {
+        setInterval(() => {
+          if (Math.random() > 0.5) {
+            createHeart();
+          }
+        }, 200);
+
+        setInterval(() => {
+          if (Math.random() > 0.3) {
+            createHeart();
+          }
+        }, 300);
+      }
+
+      document.addEventListener("click", (event) => {
+        createClickHeart(event.clientX, event.clientY);
+      });
+
+      startHearts();
+    </script>
+  </body>
+</html>
